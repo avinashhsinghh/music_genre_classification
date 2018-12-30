@@ -61,7 +61,7 @@ def music_genre(request):
             JSONdata = json.loads(str(request.body, encoding="utf-8"))
         except:
             JSONdata = 'ERROR'
-        
+
         print("JSONdata['file']: ",JSONdata['file'])
         #get index of the genre
         genre = svm.getGenre(JSONdata['file'])
@@ -81,7 +81,7 @@ def music_genre(request):
 def multi_music_genre(request):
     model = Music
     if request.method == 'POST':
-        
+
         try:
             JSONdata = json.loads(str(request.body, encoding="utf-8"))
         except:
