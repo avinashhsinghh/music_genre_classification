@@ -1,5 +1,5 @@
 # File: svm.py
-# Author: Indrajith Indraptrastham
+# Author: Avinash Kumar
 # Date: Sun Apr 28 2017
 
 import numpy as np
@@ -27,8 +27,8 @@ count = 0; #training
 loop_count = -1
 flag = True
 #extract mfcc features for the audio files
-for i in a: 
-    
+for i in a:
+
     #for training select only 90 songs from each
     if Training:
         loop_count += 1
@@ -37,14 +37,14 @@ for i in a:
         if count == 70:
             continue    #selects only 90 songs in every 100 songs
         count += 1
-    
+
     #for testing select last 10 songs from each genre
     if Testing:
         loop_count += 1
         if (loop_count + 30) % 100 == 0 and loop_count:
             count = 0
             print('--'*10)
-    
+
         if count == 30:
             continue
         count += 1
@@ -56,7 +56,7 @@ for i in a:
     mm = np.transpose(mfcc_feat)
     mf = np.mean(mm,axis=1)
     cf = np.cov(mm)
-    ff=mf  
+    ff=mf
 
     #ff is a vector of size 104
     for i in range(mm.shape[0]):
@@ -66,10 +66,10 @@ for i in a:
     if flag:
         all_mfcc = ff;
         print('*'*20)
-        flag = False      
+        flag = False
     else:
         all_mfcc = np.vstack([all_mfcc,ff])
-    
+
     print("loooping----",loop_count)
     print("all_mfcc.shape:",all_mfcc.shape)
 
@@ -81,6 +81,3 @@ np.ones(30)*6,np.ones(30)*7,np.ones(30)*8,np.ones(30)*9,np.ones(30)*10]
 
 y = flatten(y)
 yt = flatten(yt)
-
-
-

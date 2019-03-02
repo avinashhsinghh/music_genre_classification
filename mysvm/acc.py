@@ -1,5 +1,5 @@
 # File: svm.py
-# Author: Indrajith Indraptrastham
+# Author: Avinash Kumar
 # Date: Sun Apr 30 23:23:52 IST 2017
 import numpy as np
 
@@ -10,5 +10,4 @@ def get(res,tes):
     for i in truth:
         if i == True:
             pre += 1
-    return (pre * 100) /n 
-
+    return (pre * 100) /n

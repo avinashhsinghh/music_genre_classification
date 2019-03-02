@@ -1,5 +1,5 @@
 # feature.py
-# Author: Indrajith Indraprstham
+# Author: Avinash Kumar
 # Date: Sun Apr 28 2017
 # Modified on : Tue May  2 16:50:36 IST 2017
 
@@ -43,7 +43,7 @@ def extract(file):
         mm = np.transpose(mfcc_feat)
         mf = np.mean(mm,axis=1)
         cf = np.cov(mm)
-        ff=mf  
+        ff=mf
 
         #ff is a vector of size 104
         for i in range(mm.shape[0]):
@@ -54,7 +54,7 @@ def extract(file):
     except Exception as e:
             print(e)
 
-  
+
 
 
 def extract_all(audio_dir):
@@ -71,7 +71,7 @@ def extract_all(audio_dir):
         mm = np.transpose(mfcc_feat)
         mf = np.mean(mm,axis=1)
         cf = np.cov(mm)
-        ff=mf  
+        ff=mf
 
         #ff is a vector of size 104
         for i in range(mm.shape[0]):
@@ -81,10 +81,10 @@ def extract_all(audio_dir):
         if flag:
             all_mfcc = ff;
             print('*'*20)
-            flag = False      
+            flag = False
         else:
             all_mfcc = np.vstack([all_mfcc,ff])
-        
+
         print("loooping----",loop_count)
         print("all_mfcc.shape:",all_mfcc.shape)
         loop_count += 1
@@ -94,8 +94,8 @@ def extract_all(audio_dir):
 
 def extract_ratio(train_ratio, test_ratio, audio_dir):
     """
-    Extract audio in a ratio from the directory for training and testing 
-    returns two numpy array Xtrain and Xtest 
+    Extract audio in a ratio from the directory for training and testing
+    returns two numpy array Xtrain and Xtest
     audio_dir: should be of the for : "wav/*/*.wav"
     """
     if test_ratio + train_ratio != 1:
@@ -114,14 +114,14 @@ def extract_ratio(train_ratio, test_ratio, audio_dir):
     all_mfcc = np.array([])
 
     count = 0; #training
-    #count = test_ratio; 
+    #count = test_ratio;
     loop_count = -1
     flag = True
-    
 
-    for train_test_loop in range(2):      
+
+    for train_test_loop in range(2):
         #extract mfcc features for the audio files
-        for file_name in all_music_files: 
+        for file_name in all_music_files:
             #for training select only train_ratio songs from each
             if Training:
                 loop_count += 1
@@ -130,14 +130,14 @@ def extract_ratio(train_ratio, test_ratio, audio_dir):
                 if count == train_ratio * 100:
                     continue    #selects only train_ratio songs in every 100 songs
                 count += 1
-            
+
             #for testing select last test_ratio songs from each genre
             if Testing:
                 loop_count += 1
                 if (loop_count + (test_ratio * 100)) % 100 == 0 and loop_count:
                     count = 0
                     print('--'*10)
-            
+
                 if count == test_ratio * 100:
                     continue
                 count += 1
@@ -149,7 +149,7 @@ def extract_ratio(train_ratio, test_ratio, audio_dir):
                 mm = np.transpose(mfcc_feat)
                 mf = np.mean(mm,axis=1)
                 cf = np.cov(mm)
-                ff=mf  
+                ff=mf
 
                 #ff is a vector of size 104
                 for i in range(mm.shape[0]):
@@ -159,10 +159,10 @@ def extract_ratio(train_ratio, test_ratio, audio_dir):
                 if flag:
                     all_mfcc = ff;
                     print('*'*20)
-                    flag = False      
+                    flag = False
                 else:
                     all_mfcc = np.vstack([all_mfcc,ff])
-                
+
                 print("loooping----",loop_count)
                 print("all_mfcc.shape:",all_mfcc.shape)
 
@@ -196,7 +196,7 @@ def geny(n):
 
 def gen_suby(sub,n):
     """
-    generates y for a subclass 
+    generates y for a subclass
     usage: gen_suby(sub,n)
     """
     y = np.array([])
@@ -221,5 +221,3 @@ def getlabels():
              'Reggae',
              'Rock']
     return labels
-
-

@@ -1,9 +1,9 @@
 # File: svm.py
-# Author: Indrajith Indraptrastham
+# Author: Avinash Kumar
 # Date: Sun Apr 30 23:23:52 IST 2017
 
 
-import numpy as np 
+import numpy as np
 from . import acc
 from . import feature
 from sklearn import svm
@@ -50,11 +50,11 @@ def poly(X,Y):
 
 
 def fit(train_percentage,fold=5):
-    """ Radomly choose songs from the dataset, and train the classfier 
+    """ Radomly choose songs from the dataset, and train the classfier
         Accepts parameter: train_percentage, fold;
-        Returns clf    
+        Returns clf
     """
-    
+
     resTrain =0
     resTest = 0
     score = 0
@@ -93,7 +93,7 @@ def fit(train_percentage,fold=5):
                 else:
                     test_matrix = np.vstack([test_matrix, Xall[stack[test_counter]]])
 
-        Y = feature.geny(train_percentage) 
+        Y = feature.geny(train_percentage)
         y = feature.geny(100 - train_percentage)
 
         clf = svm.SVC(kernel='poly',C=1,probability=True)
@@ -107,7 +107,7 @@ def fit(train_percentage,fold=5):
 
 def getprob(filename):
     """
-    Find the probality that a song belongs to each genre. 
+    Find the probality that a song belongs to each genre.
     """
     x = feature.extract(filename)
     clf = cmpr
@@ -117,7 +117,7 @@ def getprob(filename):
     dd = dict(zip(['Classical','Hipop','Jass','Metal','Pop','Rock'],prob))
     print(prob)
 
-    # max probablity 
+    # max probablity
     m = max(dd,key=dd.get)
     print(m, dd[m])
 
@@ -129,12 +129,12 @@ def getprob(filename):
 
 
     return dd, has_features_of
-    
+
 
 
 
 def random_cross_validation(train_percentage,fold):
-    """ 
+    """
     Randomly crossvalidate with training percentage and fold. Accepts parameter: train_percentage, fold;
     """
 
@@ -176,27 +176,27 @@ def random_cross_validation(train_percentage,fold):
                 else:
                     test_matrix = np.vstack([test_matrix, Xall[stack[test_counter]]])
 
-        Y = feature.geny(train_percentage) 
+        Y = feature.geny(train_percentage)
         y = feature.geny(100 - train_percentage)
         #training accuracy
         clf = svm.SVC(kernel='poly',C=1,probability=True)
         clf.fit(train_matrix, Y)
- 
+
         res = clf.predict(train_matrix)
         #print(acc.get(res,Y))
         resTrain += acc.get(res,Y)
         res = clf.predict(test_matrix)
         resTest += acc.get(res,y)
-    
+
     print("Training accuracy with %d fold %f: " % (int(fold), resTrain / int(fold)))
     print("Testing accuracy with %d fold %f: " % (int(fold), resTest / int(fold)))
-    
+
 
 
 
 def findsubclass(class_count):
-    """ 
-    Returns all possible ways we can combine the classes. 
+    """
+    Returns all possible ways we can combine the classes.
     Accepts an integer as class count
     """
     class_l = list(range(10))
@@ -226,16 +226,16 @@ def gen_sub_data(class_l):
         if flag:
             all_x = Xall[ class_index : class_index + 100 ]
             flag = False
-        else: 
+        else:
             all_x = np.vstack([all_x, Xall[ class_index : class_index + 100 ]])
-    
+
     return all_x
 
 
 def fitsvm(Xall,Yall,class_l,train_percentage,fold):
-    """ 
+    """
     Fits an poly svm and returns the accuracy
-    Accepts parameter: 
+    Accepts parameter:
             train_percentage;
             fold;
     Returns: classifier, Accuracy
@@ -277,7 +277,7 @@ def fitsvm(Xall,Yall,class_l,train_percentage,fold):
                     flag_train = False
                 else:
                     test_matrix = np.vstack([test_matrix, Xall[stack[test_counter]]])
-        Y = feature.gen_suby(class_l, train_percentage) 
+        Y = feature.gen_suby(class_l, train_percentage)
         y = feature.gen_suby(class_l, 100 - train_percentage)
         #training accuracy
         clf = svm.SVC(kernel='poly',C=1,probability=True)
@@ -328,8 +328,8 @@ def getMultiGenre(filename):
 
     #music_feature =  feature.extract(os.path.abspath(os.path.dirname(__name__)) \
     #   +'/django-jquery-file-upload/' +filename)
-    
+
     dd, has_features_of = getprob(os.path.abspath(os.path.dirname(__name__)) \
         +'/django-jquery-file-upload/' +filename)
 
-    return dd, has_features_of 
+    return dd, has_features_of
